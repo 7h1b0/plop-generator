@@ -29,65 +29,14 @@
     xmlns="http://www.w3.org/2000/svg"
     xmlns:svg="http://www.w3.org/2000/svg"
   >
-    <defs id="defs2" />
-    <rect
-      xmlns="http://www.w3.org/2000/svg"
-      width="100%"
-      height="100%"
-      fill={hex}
-    />
-
-    <g id="layer1" transform="translate(80,35)">
-      <circle
-        style="fill:#000000;stroke-width:0.387475"
-        id="path279"
-        cx="-34.475555"
-        cy="100.48277"
-        r="170.40781"
-      />
-      <circle
-        style="fill:#ffffff;stroke-width:0.387425"
-        id="path716"
-        cx="-33.75042"
-        cy="102.80324"
-        r="159.53072"
-      />
-      <circle
-        style="fill:#000000;stroke-width:0.387475"
-        id="path279-0"
-        cx="317.92462"
-        cy="100.7594"
-        r="170.40781"
-      />
-      <circle
-        style="fill:#ffffff;stroke-width:0.387425"
-        id="path716-3"
-        cx="318.64975"
-        cy="103.07985"
-        r="159.53072"
-      />
-      <circle
-        style="fill:#000000;stroke-width:0.381931"
-        id="path745"
-        cx="-34.475555"
-        cy="100.48277"
-        r="101.51954"
-      />
-      <circle
-        style="fill:#4d4d4d;stroke-width:0.383719"
-        id="path803"
-        cx="14.93971"
-        cy="94.159081"
-        r="33.430965"
-      />
-      <circle
-        style="fill:#ececec;stroke-width:0.383719"
-        id="path857"
-        cx="37.649418"
-        cy="113.50246"
-        r="10.992165"
-      />
-    </g>
+    <rect width="100%" height="100%" fill={hex} />
+    <circle fill="#000" cx="398" cy="137" r="170" />
+    <circle fill="#fff" cx="398" cy="137" r="160" />
+    <circle fill="#000" cx="46" cy="137" r="170" />
+    <circle fill="#fff" cx="46" cy="137" r="160" />
+    <circle fill={hex} cx="59" cy="130" r="92" />
+    <circle fill="#000" cx="75" cy="140" r="73" />
+    <circle fill="#fff" cx="115" cy="162" r="21" />
   </svg>
 </section>
 

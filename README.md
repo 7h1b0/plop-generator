@@ -1,1 +1,1 @@
-# Calc
+# Plop Avatar generator
