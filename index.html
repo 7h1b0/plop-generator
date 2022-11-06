@@ -4,13 +4,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="Description" content="Plop" />
-    <meta name="theme-color" content="#eeeeee" />
+    <meta name="theme-color" content="#fff100" />
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
     <link rel="icon" href="favicon.ico" type="image/x-icon" />
     <link rel="manifest" href="manifest.json" />
     <link rel="apple-touch-icon" href="icon-192.png" />
-    <title>Plop</title>
+    <title>Plop - #fff100</title>
     <style>
+      :root {
+        --color-9: black;
+        --color-7: #44474f;
+      }
       * {
         margin: 0;
         padding: 0;
@@ -27,33 +31,49 @@
         width: 400px;
         margin: 1rem auto;
       }
-
       label {
         display: flex;
         flex-direction: column;
         align-items: center;
-        color: black;
+        color: var(--color-9);
         font-size: 1rem;
         font-weight: bold;
       }
-
       canvas {
         display: block;
         margin: 2rem auto 0;
-        outline: 8px solid black;
+        outline: 8px solid var(--color-9);
         border-radius: 8px;
       }
-
       button {
         display: block;
         margin: 2rem auto;
         border-radius: 8px;
-        background: black;
+        background: var(--color-9);
         font-size: 1rem;
         border: none;
         padding: 1rem 2rem;
         color: white;
         cursor: pointer;
+        outline-offset: 0px;
+      }
+      input {
+        width: 64px;
+        height: 32px;
+        border: none;
+        cursor: pointer;
+      }
+      input:focus-visible {
+        border: 2px outset var(--color-7);
+        outline: none;
+      }
+      button:is(:hover, :focus-visible) {
+        background: var(--color-7);
+        outline: 2px solid var(--color-7);
+        outline-offset: 2px;
+      }
+      button:active {
+        outline-offset: -2px;
       }
     </style>
   </head>
@@ -68,7 +88,7 @@
 
     <canvas id="canvas"></canvas>
 
-    <button id="download">Download</button>
+    <button id="download">Export to PNG</button>
 
     <script type="module" src="/src/index.js"></script>
     <noscript><p>Please enable javascript in your brower</p></noscript>
