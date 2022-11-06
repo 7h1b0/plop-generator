@@ -1,28 +1,27 @@
+const DEFAULT_SIZE = 300;
+
 const button = document.getElementById('download');
-button.addEventListener('click', () => {
-  const img = canvas.toDataURL('image/png');
+button.addEventListener('click', async () => {
+  const img = await generateURL(colorPicker.value);
   const downloadLink = document.createElement('a');
   downloadLink.href = img;
   downloadLink.download = 'plop.png';
   document.body.appendChild(downloadLink);
   downloadLink.click();
+
+  // Cleanup
   document.body.removeChild(downloadLink);
+  URL.revokeObjectURL(img);
 });
 
 const colorPicker = document.getElementById('color');
 colorPicker.addEventListener('change', (event) => {
   const hex = event.target.value;
-  draw(hex);
+  draw(ctx, hex);
 });
 
-const canvas = document.getElementById('canvas');
-
-function draw(color = '#fff100', size = 400) {
-  canvas.width = size;
-  canvas.height = size;
-  const ctx = canvas.getContext('2d');
-
-  const coef = size / 300;
+function draw(ctx, color, size = DEFAULT_SIZE) {
+  const coef = size / DEFAULT_SIZE;
 
   // background
   ctx.rect(0, 0, size, size);
@@ -66,4 +65,16 @@ function draw(color = '#fff100', size = 400) {
   ctx.fill();
 }
 
-draw();
+const canvas = document.getElementById('canvas');
+canvas.width = DEFAULT_SIZE;
+canvas.height = DEFAULT_SIZE;
+const ctx = canvas.getContext('2d');
+draw(ctx, colorPicker.value);
+
+async function generateURL(hex, size = 1000) {
+  const offscreen = new OffscreenCanvas(size, size);
+  const ctx = offscreen.getContext('2d');
+  draw(ctx, hex, size);
+  const blob = await offscreen.convertToBlob();
+  return URL.createObjectURL(blob);
+}
