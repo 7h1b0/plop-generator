@@ -1,5 +1,23 @@
 const DEFAULT_SIZE = 300;
 
+const COLOR_EYE_X = 59;
+const COLOR_EYE_Y = 130;
+const COLOR_EYE_R = 92;
+
+const BLACK_EYE_X = 75;
+const BLACK_EYE_Y = 140;
+const BLACK_EYE_R = 73;
+
+const WHITE_EYE_X = 115;
+const WHITE_EYE_Y = 162;
+const WHITE_EYE_R = 21;
+
+const canvas = document.getElementById('canvas');
+const button = document.getElementById('download');
+const colorPicker = document.getElementById('color');
+const ruler = document.getElementById('ruler');
+
+/** FUNCTION */
 function draw(ctx, color, size = DEFAULT_SIZE) {
   const coef = size / DEFAULT_SIZE;
 
@@ -28,19 +46,26 @@ function draw(ctx, color, size = DEFAULT_SIZE) {
 
   // color eye
   ctx.beginPath();
-  ctx.arc(59 * coef, 130 * coef, 92 * coef, 0, Math.PI * 2, true);
+  ctx.arc(
+    COLOR_EYE_X * coef,
+    COLOR_EYE_Y * coef,
+    COLOR_EYE_R * coef,
+    0,
+    Math.PI * 2,
+    true,
+  );
   ctx.fillStyle = color;
   ctx.fill();
 
   // black inside eye
   ctx.beginPath();
-  ctx.arc(75 * coef, 140 * coef, 73 * coef, 0, Math.PI * 2, true);
+  ctx.arc(x * coef, y * coef, BLACK_EYE_R * coef, 0, Math.PI * 2, true);
   ctx.fillStyle = 'black';
   ctx.fill();
 
   // white inside eye
   ctx.beginPath();
-  ctx.arc(115 * coef, 162 * coef, 21 * coef, 0, Math.PI * 2, true);
+  ctx.arc(x2 * coef, y2 * coef, WHITE_EYE_R * coef, 0, Math.PI * 2, true);
   ctx.fillStyle = 'white';
   ctx.fill();
 }
@@ -53,15 +78,7 @@ async function generateURL(hex, size = 1000) {
   return URL.createObjectURL(blob);
 }
 
-const canvas = document.getElementById('canvas');
-const button = document.getElementById('download');
-const colorPicker = document.getElementById('color');
-
-canvas.width = DEFAULT_SIZE;
-canvas.height = DEFAULT_SIZE;
-const ctx = canvas.getContext('2d');
-draw(ctx, colorPicker.value);
-
+/** LISTENER */
 button.addEventListener('click', async () => {
   const img = await generateURL(colorPicker.value);
   const downloadLink = document.createElement('a');
@@ -80,3 +97,49 @@ colorPicker.addEventListener('change', (event) => {
   document.title = `Plop - ${hex}`;
   draw(ctx, hex);
 });
+
+document.body.addEventListener('keydown', (event) => {
+  if (event.key === ' ') {
+    followMouse = !followMouse;
+  }
+});
+
+document.body.addEventListener('mousemove', (event) => {
+  if (!followMouse) {
+    return;
+  }
+
+  const rulerRect = ruler.getBoundingClientRect();
+  const angle = Math.atan2(
+    event.clientY - rulerRect.y,
+    event.clientX - rulerRect.x,
+  );
+
+  const colorBlackR = COLOR_EYE_R - BLACK_EYE_R;
+  const colorWhiteR = COLOR_EYE_R - WHITE_EYE_R - 5;
+  x = colorBlackR * Math.cos(angle) + COLOR_EYE_X;
+  y = colorBlackR * Math.sin(angle) + COLOR_EYE_Y;
+  x2 = colorWhiteR * Math.cos(angle) + COLOR_EYE_X;
+  y2 = colorWhiteR * Math.sin(angle) + COLOR_EYE_Y;
+
+  draw(ctx, colorPicker.value, DEFAULT_SIZE);
+});
+
+ruler.style.top = `${COLOR_EYE_Y}px`;
+ruler.style.left = `${COLOR_EYE_X}px`;
+
+canvas.width = DEFAULT_SIZE;
+canvas.height = DEFAULT_SIZE;
+
+/** STATE */
+let x = BLACK_EYE_X;
+let y = BLACK_EYE_Y;
+
+let x2 = WHITE_EYE_X;
+let y2 = WHITE_EYE_Y;
+
+let followMouse = false;
+
+/** INIT */
+const ctx = canvas.getContext('2d');
+draw(ctx, colorPicker.value);
