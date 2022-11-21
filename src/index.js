@@ -122,7 +122,7 @@ document.body.addEventListener('mousemove', (event) => {
   x2 = colorWhiteR * Math.cos(angle) + COLOR_EYE_X;
   y2 = colorWhiteR * Math.sin(angle) + COLOR_EYE_Y;
 
-  draw(ctx, colorPicker.value, DEFAULT_SIZE);
+  draw(ctx, colorPicker.value);
 });
 
 ruler.style.top = `${COLOR_EYE_Y}px`;
