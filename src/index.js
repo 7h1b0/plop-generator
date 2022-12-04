@@ -94,7 +94,6 @@ button.addEventListener('click', async () => {
 
 colorPicker.addEventListener('change', (event) => {
   const hex = event.target.value;
-  document.title = `Plop - ${hex}`;
   draw(ctx, hex);
 });
 
