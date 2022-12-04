@@ -97,13 +97,13 @@ colorPicker.addEventListener('change', (event) => {
   draw(ctx, hex);
 });
 
-document.body.addEventListener('keydown', (event) => {
+document.addEventListener('keydown', (event) => {
   if (event.key === ' ') {
     followMouse = !followMouse;
   }
 });
 
-document.body.addEventListener('mousemove', (event) => {
+document.addEventListener('mousemove', (event) => {
   if (!followMouse) {
     return;
   }
