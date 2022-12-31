@@ -18,7 +18,7 @@ const colorPicker = document.getElementById('color');
 const ruler = document.getElementById('ruler');
 
 /** FUNCTION */
-function draw(ctx, color, size = DEFAULT_SIZE) {
+const draw = (ctx, color, size = DEFAULT_SIZE) => {
   const coef = size / DEFAULT_SIZE;
 
   // background
@@ -68,15 +68,15 @@ function draw(ctx, color, size = DEFAULT_SIZE) {
   ctx.arc(x2 * coef, y2 * coef, WHITE_EYE_R * coef, 0, Math.PI * 2, true);
   ctx.fillStyle = 'white';
   ctx.fill();
-}
+};
 
-async function generateURL(hex, size = 1000) {
+const generateURL = async (hex, size = 1000) => {
   const offscreen = new OffscreenCanvas(size, size);
   const ctx = offscreen.getContext('2d');
   draw(ctx, hex, size);
   const blob = await offscreen.convertToBlob();
   return URL.createObjectURL(blob);
-}
+};
 
 /** LISTENER */
 button.addEventListener('click', async () => {
