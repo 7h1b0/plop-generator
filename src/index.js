@@ -1,3 +1,5 @@
+// @ts-check
+
 const DEFAULT_SIZE = 300;
 
 const COLOR_EYE_X = 59;
@@ -12,13 +14,29 @@ const WHITE_EYE_X = 115;
 const WHITE_EYE_Y = 162;
 const WHITE_EYE_R = 21;
 
-const canvas = document.getElementById('canvas');
+const canvas = /** @type {HTMLCanvasElement | null} */ (
+  document.getElementById('canvas')
+);
 const button = document.getElementById('download');
-const colorPicker = document.getElementById('color');
+
+const colorPicker = /** @type {HTMLInputElement | null} */ (
+  document.getElementById('color')
+);
 const ruler = document.getElementById('ruler');
 
-/** FUNCTION */
+if (!canvas || !button || !colorPicker || !ruler) {
+  throw new Error('Element not defined');
+}
+
+/**
+ * Draw a Plop into a canvas
+ * @param {OffscreenCanvasRenderingContext2D | CanvasRenderingContext2D | null} ctx
+ * @param {string} color
+ */
 const draw = (ctx, color, size = DEFAULT_SIZE) => {
+  if (!ctx) {
+    throw new Error('Canvas context not defined');
+  }
   const coef = size / DEFAULT_SIZE;
 
   // background
@@ -70,6 +88,12 @@ const draw = (ctx, color, size = DEFAULT_SIZE) => {
   ctx.fill();
 };
 
+/**
+ * Generate a URL to download a Plop
+ * @param {string} hex
+ * @param {number} size
+ * @returns {Promise<string>}
+ */
 const generateURL = async (hex, size = 1000) => {
   const offscreen = new OffscreenCanvas(size, size);
   const ctx = offscreen.getContext('2d');
@@ -93,8 +117,10 @@ button.addEventListener('click', async () => {
 });
 
 colorPicker.addEventListener('change', (event) => {
-  const hex = event.target.value;
-  draw(ctx, hex);
+  if (event.target) {
+    const hex = /** @type {HTMLInputElement} */ (event.target).value;
+    draw(ctx, hex);
+  }
 });
 
 document.addEventListener('keydown', (event) => {
