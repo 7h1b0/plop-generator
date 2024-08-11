@@ -6,7 +6,6 @@ export default defineConfig({
     modulePreload: false,
     sourcemap: false,
     assetsInlineLimit: 0,
-    target: ['firefox102', 'safari15', 'chrome90'],
     reportCompressedSize: true,
   },
   server: {
